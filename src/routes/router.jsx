@@ -4,6 +4,10 @@ import Home from "../pages/Home";
 import Done from "../pages/Done";
 import About from "../pages/About";
 import Todos from "../pages/Todos";
+import Login from "../pages/Login";
+import Season from "../pages/Season";
+import CropSelection from "../pages/CropSelection";
+import Dashboard from "../pages/Dashboard";
 
 
 export const router = createBrowserRouter([
@@ -27,6 +31,22 @@ export const router = createBrowserRouter([
          path:"/About",
          element: <About/> 
 
+        },
+        {
+          path:"/login",
+          element:<Login/>
+        },
+         {
+          path:"/season",
+          element:<Season/>
+        },
+         {
+          path:"/crop-selection",
+          element:<CropSelection/>
+        },
+         {
+          path:"/dashboard",
+          element:<Dashboard/>
         },
     ],
   },

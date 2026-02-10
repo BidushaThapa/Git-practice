@@ -15,6 +15,8 @@ const Header = () => {
         <Link to="/Todos" className="hover:text-amber-700">Todos</Link>
         <Link to="/Done" className="hover:text-amber-700">Done</Link>
         <Link to="/about" className="hover:text-amber-700">About</Link>
+        <Link to="/Login" className="hover:text-amber-700">Login</Link> 
+        <Link to="/Season" className="hover:text-amber-700">Season</Link> 
       </div>
 
       {/* Optional: add empty div to balance spacing on right */}
