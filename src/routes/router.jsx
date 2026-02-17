@@ -4,10 +4,13 @@ import Home from "../pages/Home";
 import Done from "../pages/Done";
 import About from "../pages/About";
 import Todos from "../pages/Todos";
-import Login from "../pages/Login";
+// import Login from "../pages/Login";
 import Season from "../pages/Season";
 import CropSelection from "../pages/CropSelection";
 import Dashboard from "../pages/Dashboard";
+import DashboardTra from "../pages/DashboardTra";
+import Login from "../pages/LoginUs";
+import Signup from "../pages/Login";
 
 
 export const router = createBrowserRouter([
@@ -37,6 +40,11 @@ export const router = createBrowserRouter([
           element:<Login/>
         },
          {
+          path:"/signup",
+          element:<Signup/>
+        },
+        
+         {
           path:"/season",
           element:<Season/>
         },
@@ -48,6 +56,10 @@ export const router = createBrowserRouter([
           path:"/dashboard",
           element:<Dashboard/>
         },
+         {
+          path:"/dashboardtra",
+          element:<DashboardTra/>
+        }
     ],
   },
 ]);
