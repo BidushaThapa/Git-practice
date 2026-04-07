@@ -1,16 +1,20 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFarmerStore } from "../store/farmerStore";
 
 export default function Season() {
-  const [ward, setWard] = useState("");
-  const [season, setSeason] = useState("");
+  const ward = useFarmerStore((state) => state.ward);
+  const season = useFarmerStore((state) => state.season);
+  const landSize = useFarmerStore((state) => state.landSize);
+  const landUnit = useFarmerStore((state) => state.landUnit);
+  const setWard = useFarmerStore((state) => state.setWard);
+  const setSeason = useFarmerStore((state) => state.setSeason);
+  const setLandSize = useFarmerStore((state) => state.setLandSize);
+  const setLandUnit = useFarmerStore((state) => state.setLandUnit);
   const navigate = useNavigate();
 
   const handleContinue = () => {
-    if (!ward || !season) return;
-    localStorage.setItem("ward", ward);
-    localStorage.setItem("season", season);
-     navigate("/crop-selection");
+    if (!ward || !season || !landSize || !landUnit) return;
+    navigate("/crop-selection");
   };
 
   const seasonData = {
@@ -124,9 +128,45 @@ export default function Season() {
                   <option value="Winter">❄️ Winter</option>
                 </select>
               </div>
+              {/* Land Size */}
 
+
+
+
+
+
+             {/* Land Size */}
+<div className="mb-8">
+  <label className="block text-sm font-semibold text-gray-700 mb-2">
+    🌾 Land Size
+  </label>
+  <div className="flex gap-3">
+    <input
+      type="number"
+      min="0"
+      step="0.1"
+      placeholder="e.g. 2.5"
+      className="w-full p-4 border-2 border-gray-200 text-black rounded-xl focus:border-green-500 focus:ring-4 focus:ring-green-100 outline-none bg-white"
+      value={landSize}
+      onChange={(e) => setLandSize(e.target.value)}
+    />
+    <select
+      className="p-4 border-2 border-gray-200 text-black rounded-xl focus:border-green-500 focus:ring-4 focus:ring-green-100 outline-none bg-white"
+      value={landUnit}
+      onChange={(e) => setLandUnit(e.target.value)}
+    >
+      <option value="Ropani">Ropani</option>
+      <option value="Bigha">Bigha</option>
+      <option value="Kattha">Kattha</option>
+      <option value="Hectare">Hectare</option>
+    </select>
+  </div>
+  <p className="text-xs text-gray-400 mt-2 ml-1">
+    Helps estimate total community production, not just farmer count
+  </p>
+</div>
               {/* Selection Preview */}
-              {(ward || season) && (
+              {(ward || season || landSize) && (
                 <div className="mb-6 p-4 bg-green-50 border-2 border-green-200 rounded-xl">
                   <p className="text-sm text-gray-600 mb-2">Your selection:</p>
                   <div className="flex gap-3 flex-wrap">
@@ -140,6 +180,11 @@ export default function Season() {
                         {seasonData[season]?.emoji} {season}
                       </span>
                     )}
+                    {landSize && (
+                      <span className="px-3 py-1 bg-white text-black rounded-full text-sm font-medium shadow">
+                        🌾 {landSize} {landUnit}
+                      </span>
+                    )}
                   </div>
                 </div>
               )}
@@ -147,7 +192,7 @@ export default function Season() {
               {/* Continue */}
               <button
                 onClick={handleContinue}
-                disabled={!ward || !season}
+                disabled={!ward || !season || !landSize || !landUnit}
                 className="w-full  hover:scale-90 bg-linear-to-r from-green-600 to-emerald-600 text-white py-4 rounded-xl disabled:opacity-40 hover:from-green-700 hover:to-emerald-700 transition-all font-semibold text-lg shadow-lg"
               >
                 Continue  →

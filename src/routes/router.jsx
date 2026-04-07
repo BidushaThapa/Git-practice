@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../Layout/RootLayout"; // ✅ import RootLayout here
+import AppLayout from "../Layout/AppLayout";
 import Home from "../pages/Home";
 import Done from "../pages/Done";
 import About from "../pages/About";
@@ -9,6 +10,8 @@ import Season from "../pages/Season";
 import CropSelection from "../pages/CropSelection";
 import Dashboard from "../pages/Dashboard";
 import DashboardTra from "../pages/DashboardTra";
+import MarketPriceTrends from "../pages/MarketTrends";
+import Profile from "../pages/Profile";
 import Login from "../pages/LoginUs";
 import Signup from "../pages/Login";
 
@@ -53,12 +56,25 @@ export const router = createBrowserRouter([
           element:<CropSelection/>
         },
          {
-          path:"/dashboard",
-          element:<Dashboard/>
-        },
-         {
           path:"/dashboardtra",
           element:<DashboardTra/>
+        },
+        {
+          element: <AppLayout />,
+          children: [
+            {
+              path: "dashboard",
+              element: <Dashboard />,
+            },
+            {
+              path: "market-trends",
+              element: <MarketPriceTrends />,
+            },
+            {
+              path: "profile",
+              element: <Profile />,
+            },
+          ],
         }
     ],
   },

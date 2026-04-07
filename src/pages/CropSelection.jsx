@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { href, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useFarmerStore } from "../store/farmerStore";
 
 export default function CropSelection() {
-  const [selectedCrop, setSelectedCrop] = useState(
-    localStorage.getItem("selectedCrop"||"")
-  );
-
-  const ward = localStorage.getItem("ward"||"");
-  const season = localStorage.getItem("season"||"");
-const navigate=useNavigate()
+  const selectedCrop = useFarmerStore((state) => state.selectedCrop);
+  const setSelectedCrop = useFarmerStore((state) => state.setSelectedCrop);
+  const ward = useFarmerStore((state) => state.ward);
+  const season = useFarmerStore((state) => state.season);
+  const landSize = useFarmerStore((state) => state.landSize);
+  const landUnit = useFarmerStore((state) => state.landUnit);
+  const navigate = useNavigate();
   const crops = [
     { name: "Tomato", emoji: "🍅" },
     { name: "Onion", emoji: "🧅" },
@@ -19,10 +19,8 @@ const navigate=useNavigate()
     const handleCropClick = (cropName) => {
     if (selectedCrop === cropName) {
       setSelectedCrop("");
-      localStorage.removeItem("selectedCrop");
     } else {
       setSelectedCrop(cropName);
-      localStorage.setItem("selectedCrop", cropName);
     }
   };
 
@@ -69,6 +67,9 @@ const navigate=useNavigate()
             </span>
             <span className="px-3 py-1 bg-white rounded-full shadow text-sm text-black">
               📅 {season}
+            </span>
+              <span className="px-3 py-1 bg-white rounded-full shadow text-sm text-black">
+                  🌾 {landSize} {landUnit}
             </span>
           </div>
         </div>

@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useFarmerStore } from "../store/farmerStore";
 
 export default function Dashboard() {
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  const ward = localStorage.getItem("ward");
-  const season = localStorage.getItem("season");
-  const selectedCrop = localStorage.getItem("selectedCrop") || "";
+  const ward = useFarmerStore((state) => state.ward);
+  const season = useFarmerStore((state) => state.season);
+  const selectedCrop = useFarmerStore((state) => state.selectedCrop);
+  const landSize = useFarmerStore((state) => state.landSize);
+  const landUnit = useFarmerStore((state) => state.landUnit);
 
   useEffect(() => {
+    if (!ward || !season) {
+      setLoading(false);
+      return;
+    }
+
     const fetchStats = async () => {
       setLoading(true);
       const token = localStorage.getItem("token");
@@ -55,7 +65,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-green-50 via-emerald-50 to-teal-50 px-4 py-12">
-      <div className="max-w-5xl mx-auto">
+      <div className="mx-auto max-w-5xl">
         {/* Header */}
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold text-green-700 mb-2">
@@ -67,6 +77,12 @@ export default function Dashboard() {
           <div className="mt-3 flex justify-center gap-3 flex-wrap">
             <span className="px-3 py-1 bg-white rounded-full shadow text-sm text-black">
               📍 {ward}
+            </span>
+             <span className="px-3 py-1 bg-white rounded-full shadow text-sm text-black">
+            📅 {season}
+            </span>
+             <span className="px-3 py-1 bg-white rounded-full shadow text-sm text-black">
+             🌾 {landSize} {landUnit}
             </span>
           </div>
         </div>
@@ -116,7 +132,7 @@ export default function Dashboard() {
          
           <button
             className="px-8 py-4 bg-white border-2 border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 transition-all shadow-md hover:scale-90"
-            onClick={() => (window.location.href = "/crop-selection")}
+            onClick={() => navigate("/crop-selection")}
           >
             Change Crop ↩️
           </button>
